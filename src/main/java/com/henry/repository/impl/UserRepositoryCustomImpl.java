@@ -66,8 +66,9 @@ public class UserRepositoryCustomImpl extends QuerydslRepositorySupport implemen
     
     public JPQLQuery<User> userQuery() {
 		QUser user = QUser.user;
-
-		return from(user).leftJoin(user.homeAddress, QAddress.address).fetchJoin()
-				.leftJoin(user.workAddress, QAddress.address).fetchJoin();
+        QAddress homeAddress = new QAddress("homeAddress");
+		QAddress workAddress = new QAddress("workAddress");
+		return from(user).leftJoin(user.homeAddress, homeAddress).fetchJoin()
+				.leftJoin(user.workAddress, workAddress).fetchJoin();
 	}
 }
