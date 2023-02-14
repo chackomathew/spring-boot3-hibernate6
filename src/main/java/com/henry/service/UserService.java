@@ -9,5 +9,7 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findActiveUsers();
+
     Integer getSum(int a, int b);
 }

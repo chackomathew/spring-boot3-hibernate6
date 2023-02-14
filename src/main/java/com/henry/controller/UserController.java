@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.random.RandomGenerator;
 
 @RestController
 @RequestMapping("/api/users")
@@ -32,6 +33,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/active")
+    public List<User> findActiveUsers() {
+        return userService.findActiveUsers();
+    }
+
     @GetMapping("/sum/{a}/{b}")
     public Integer getSum(@PathVariable int a, @PathVariable int b) {
         return userService.getSum(a, b);
@@ -42,5 +48,16 @@ public class UserController {
     public User addUser(@RequestBody User user) {
         return userService.save(user);
     }
+
+    // @GetMapping("/create")
+    // @ResponseStatus(HttpStatus.CREATED)
+    // public User createUser() {
+    //     User user = User.builder()
+    //                     .firstName("Chacko"+ RandomGenerator.getDefault().nextInt())
+    //                     .lastName("Mathew"+RandomGenerator.getDefault().nextInt())
+    //                     .deleted(false)
+    //                     .build();
+    //     return userService.save(user);
+    // }
 
 }
