@@ -24,5 +24,11 @@ public class User {
     @Column(name = "deleted")
 	@Convert(converter= YesNoConverter.class)
     private boolean deleted;
+    @ManyToOne
+    @JoinColumn(name = "home_address_id")
+    private Address homeAddress;
+    @ManyToOne
+    @JoinColumn(name = "work_address_id")
+    private Address workAddress;
 
 }

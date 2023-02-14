@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.random.RandomGenerator;
 
 @RestController
@@ -36,6 +37,11 @@ public class UserController {
     @GetMapping("/active")
     public List<User> findActiveUsers() {
         return userService.findActiveUsers();
+    }
+
+    @GetMapping("/firstName")
+    public Optional<User> findByFirstName() {
+        return userService.findByFirstName();
     }
 
     @GetMapping("/sum/{a}/{b}")
