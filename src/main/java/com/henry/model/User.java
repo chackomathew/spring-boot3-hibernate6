@@ -1,6 +1,12 @@
 package com.henry.model;
 
+import org.hibernate.annotations.JavaType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 import org.hibernate.type.YesNoConverter;
+import org.hibernate.type.descriptor.java.BooleanJavaType;
+import org.hibernate.usertype.StaticUserTypeSupport;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +29,9 @@ public class User {
     private String lastName;
     @Column(name = "deleted")
 	@Convert(converter= YesNoConverter.class)
-    private boolean deleted;
+    //@JdbcTypeCode(SqlTypes.CHAR)
+    //@JavaType(BooleanJavaType.class)
+    //@Type(value = BooleanUserTypeSupport.class)
+    private Boolean deleted;
 
 }

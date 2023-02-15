@@ -10,5 +10,7 @@ public interface UserRepository extends JpaRepository<User,Long>, UserRepository
 
     Optional<User> findByFirstName(String firstName);
 
+    List<User> findByDeleted(boolean deleted);
+
     List<User> findByDeletedFalse();
 }
