@@ -34,4 +34,8 @@ public class User {
     //@Type(value = BooleanUserTypeSupport.class)
     private Boolean deleted;
 
+    @Override
+    public boolean equals(Object other) {
+        return this.id.equals(((User)other).getId());
+    }
 }
