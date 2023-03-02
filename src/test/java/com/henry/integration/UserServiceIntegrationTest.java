@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import com.henry.Spring3Hibernate6Application;
 import com.henry.model.User;
+import com.henry.repository.UserRepository;
 import com.henry.service.UserService;
 
 @ExtendWith(SpringExtension.class)
@@ -37,17 +39,26 @@ public class UserServiceIntegrationTest {
             .withPassword("password");
 
     @BeforeAll
-    static void startContainer() {
+    public static void startContainer() {
         POSTGRES_SQL_CONTAINER.start();
     }
 
+    @BeforeEach
+    public void deleteAllData() {
+        userRepository.deleteAllInBatch();
+    }
+
+
     @AfterAll
-    static void stopContainer() {
+    public static void stopContainer() {
         POSTGRES_SQL_CONTAINER.stop();
     }
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // ERROR Testcase org.springframework.dao.InvalidDataAccessResourceUsageException: JDBC exception executing SQL [select u1_0.id,u1_0.deleted,u1_0.first_name,u1_0.last_name from users u1_0 where not(u1_0.deleted)
     // Caused by: org.postgresql.util.PSQLException: ERROR: argument of NOT must be type boolean, not type character
@@ -62,7 +73,7 @@ public class UserServiceIntegrationTest {
 
         //then
         Assert.assertEquals("User count doesn't match", 1, users.size());
-        Assert.assertEquals("Active user is not returned", savedUser, users.stream().findAny());
+        Assert.assertEquals("Active user is not returned", savedUser, users.stream().findAny().get());
 
     }
     
